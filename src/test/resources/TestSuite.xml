@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<suite name="Test Plan" verbose="1">
+
+
+   <test name="Mail Test" preserve-order="true">
+        <parameter name="username" value="justfortest.anastasia"/>
+        <parameter name="password" value="Test12#$"/>
+        <parameter name="mailText" value="Hello, world!"/>
+        <classes>
+            <class name="tests.web.GmailTest"/>
+        </classes>
+    </test>
+
+
+</suite>
