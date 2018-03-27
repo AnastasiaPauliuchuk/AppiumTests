@@ -23,7 +23,7 @@ public class Browser extends Base {
 
     private static Browser instance;
     private static AndroidDriver driver;
-    private static final String PROPERTIES_FILE = "web.capabilities.properties";
+    private static final String PROPERTIES_FILE = "mobile.capabilities.properties";
     private static final String APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
     private static final String START_URL = "http://gmail.com";
     private static final String timeoutForLoad = "60";
@@ -73,7 +73,7 @@ public class Browser extends Base {
 
     public void open() {
 
-        driver.get(START_URL);
+       // driver.get(START_URL);
        /* try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {

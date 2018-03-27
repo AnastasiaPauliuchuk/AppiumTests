@@ -4,6 +4,8 @@ import base.page.PageManager;
 import base.test.BaseTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+import pages.mobile.EmailLoginPage;
+import pages.mobile.EmailNewAccountPage;
 import pages.web.GmailMailboxPage;
 import pages.web.GmailPasswordPage;
 import pages.web.GmailStartPage;
@@ -26,8 +28,13 @@ public class GmailTest extends BaseTest {
 
     @Override
     public void runTest() {
-        info("start test");
-        GmailStartPage gmailStartPage = PageManager.createPage(GmailStartPage.class, "Gmail Login Page");
+
+        EmailNewAccountPage emailNewAccountPage = PageManager.createPage(EmailNewAccountPage.class, "Start Page");
+        emailNewAccountPage.goNewAccount();
+
+        EmailLoginPage emailLoginPage = PageManager.createPage(EmailLoginPage.class, "Login Page");
+        emailLoginPage.login(username,password);
+        /*GmailStartPage gmailStartPage = PageManager.createPage(GmailStartPage.class, "Gmail Login Page");
         step(1, "Enter and submit the username");
         gmailStartPage.enterLogin(username);
         gmailStartPage.submitLogin();
@@ -47,6 +54,6 @@ public class GmailTest extends BaseTest {
         step(5, "Open the message");
         gmailMailboxPage.goLastUnreadMessage(email);
         check("Verify the message body");
-        gmailMailboxPage.assertMessageBody(mailText);
+        gmailMailboxPage.assertMessageBody(mailText);*/
     }
 }
