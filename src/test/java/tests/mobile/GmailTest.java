@@ -4,11 +4,9 @@ import base.page.PageManager;
 import base.test.BaseTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import pages.mobile.EmailLoginPage;
-import pages.mobile.EmailNewAccountPage;
-import pages.web.GmailMailboxPage;
-import pages.web.GmailPasswordPage;
-import pages.web.GmailStartPage;
+import pages.mobile.EmailInboxPage;
+import pages.mobile.EmailMsgPage;
+import pages.mobile.EmailNewMsgPage;
 import utils.MailUtils;
 
 public class GmailTest extends BaseTest {
@@ -29,31 +27,35 @@ public class GmailTest extends BaseTest {
     @Override
     public void runTest() {
 
-        EmailNewAccountPage emailNewAccountPage = PageManager.createPage(EmailNewAccountPage.class, "Start Page");
+     /*  EmailNewAccountPage emailNewAccountPage = PageManager.createPage(EmailNewAccountPage.class, "Start Page");
         emailNewAccountPage.goNewAccount();
 
         EmailLoginPage emailLoginPage = PageManager.createPage(EmailLoginPage.class, "Login Page");
-        emailLoginPage.login(username,password);
-        /*GmailStartPage gmailStartPage = PageManager.createPage(GmailStartPage.class, "Gmail Login Page");
-        step(1, "Enter and submit the username");
-        gmailStartPage.enterLogin(username);
-        gmailStartPage.submitLogin();
+        emailLoginPage.login(MailUtils.gmailFromUsername(username),password);
+
+
+        GmailLoginPage gmailLoginPage = PageManager.createPage(GmailLoginPage.class, "Gmail Login Page");
+        gmailLoginPage.enterEmail(MailUtils.gmailFromUsername(username));
+
         GmailPasswordPage gmailPasswordPage = PageManager.createPage(GmailPasswordPage.class, "Gmail Password Page");
+        gmailPasswordPage.enterPassword(password);*/
 
-        step(2, "Enter and submit the password");
-        gmailPasswordPage.authorize(password);
-        GmailMailboxPage gmailMailboxPage = PageManager.createPage(GmailMailboxPage.class, "Gmail Mailbox Page ");
-        step(3, "Send the message to yourself");
-        gmailMailboxPage.compose();
+        EmailInboxPage inboxPage = PageManager.createPage(EmailInboxPage.class, "Inbox Page");
+        inboxPage.openCompose();
+        EmailNewMsgPage emailNewMsgPage = PageManager.createPage(EmailNewMsgPage.class, "New message Page");
         String email = MailUtils.gmailFromUsername(username);
-        gmailMailboxPage.sendNewMessage(email, mailText);
+        emailNewMsgPage.sendNewMessage(email,mailText);
+        inboxPage.goLastMessage();
 
-        step(4, "Open the inbox folder");
-        gmailMailboxPage.openInboxAfterMsgSent();
+        EmailMsgPage emailMsgPage = PageManager.createPage(EmailMsgPage.class, "Gmail Password Page");
+        emailMsgPage.assertMessageBody(username,mailText);
 
-        step(5, "Open the message");
-        gmailMailboxPage.goLastUnreadMessage(email);
-        check("Verify the message body");
-        gmailMailboxPage.assertMessageBody(mailText);*/
+
+
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

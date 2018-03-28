@@ -92,6 +92,7 @@ public class GmailMailboxPage extends BasePage {
     }
 
     public void assertMessageBody(String expectedText) {
+
         assertinfo(lblMessageBody.getWrappedElement().getText(), expectedText);
         Assert.assertTrue(lblMessageBody.getText().contains(expectedText));
 
