@@ -5,6 +5,7 @@ import base.page.BasePage;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 /**
@@ -14,7 +15,7 @@ import org.testng.Assert;
 public class EmailMsgPage extends BasePage {
 
     private static final String FROM_LOCATOR = "com.samsung.android.email.provider:id/from_name";
-    private static final String MSG_LOCATOR = "MessageWebViewDiv";
+    private static final String MSG_LOCATOR = "//*[@resource-id=\"MessageWebViewDiv\"]/*[@class=\"android.view.View\"]";
 
     public EmailMsgPage(String name) {
         super(name);
@@ -30,9 +31,9 @@ public class EmailMsgPage extends BasePage {
         MobileElement lblFrom = (MobileElement) driver.findElementById(FROM_LOCATOR);
         assertinfo(lblFrom.getText(), expectedSender);
 
-        Assert.assertTrue(lblFrom.getText().contains(expectedText));
+        Assert.assertTrue(lblFrom.getText().contains(expectedSender));
 
-        MobileElement lblText = (MobileElement) driver.findElementById(FROM_LOCATOR);
+        WebElement lblText = driver.findElement(By.xpath(MSG_LOCATOR));
         assertinfo(lblText.getText(), expectedText);
 
         Assert.assertTrue(lblText.getText().contains(expectedText));

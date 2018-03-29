@@ -23,12 +23,18 @@ public class Browser extends Base {
 
     private static Browser instance;
     private static AndroidDriver driver;
-    private static final String PROPERTIES_FILE = "mobile.capabilities.properties";
-    private static final String APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
-    private static final String START_URL = "http://gmail.com";
-    private static final String timeoutForLoad = "60";
-    private static String timeoutForCondition = "30";
-    public static  String currentBrowser = "Chrome";
+    private static final String CAPABILITIES_PROPERTIES = "mobile.capabilities.properties";
+    private static final String APPIUM_PROPERTIES = "appium.properties";
+
+    private static final String WEB_CONTEXT = "web";
+    private static final String NATIVE_CONTEXT = "native";
+
+    private static  String appiumURL ;
+    private static  String startURL ;
+    private static  String timeoutForLoad ;
+    private static String timeoutForCondition ;
+    public static  String currentBrowser;
+    private static  String context;
 
     private Browser() {
         info("constructed");
@@ -50,14 +56,23 @@ public class Browser extends Base {
     }
 
     private static AndroidDriver initDriver()  throws MalformedURLException {
-        PropertiesResourceManager propManager = new PropertiesResourceManager(PROPERTIES_FILE);
+
+
+        PropertiesResourceManager propManager = new PropertiesResourceManager(CAPABILITIES_PROPERTIES);
         Map<String, String> capabilityMap = propManager.getAllProperties();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         for (Map.Entry<String, String> cap : capabilityMap.entrySet()) {
             capabilities.setCapability(cap.getKey(), cap.getValue());
         }
 
-        return new AndroidDriver(new URL(APPIUM_URL), capabilities);
+        propManager = new PropertiesResourceManager(APPIUM_PROPERTIES);
+        appiumURL = propManager.getProperty("appiumURL");
+        startURL = propManager.getProperty("startURL","");
+        currentBrowser = propManager.getProperty("currentBrowser","");
+        timeoutForCondition = propManager.getProperty("timeoutForCondition","30");
+        timeoutForLoad = propManager.getProperty("timeoutForLoad","60");
+        context = propManager.getProperty("context",WEB_CONTEXT);
+        return new AndroidDriver(new URL(appiumURL), capabilities);
 
 
     }
@@ -73,13 +88,9 @@ public class Browser extends Base {
 
     public void open() {
 
+        if(context.equals(WEB_CONTEXT))
+             driver.get(startURL);
 
-       // driver.get(START_URL);
-       /* try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
     }
     public void close() {

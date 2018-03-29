@@ -8,7 +8,7 @@
         <parameter name="password" value="Test12#$"/>
         <parameter name="mailText" value="Hello, world!"/>
         <classes>
-            <class name="tests.mobile.GmailTest"/>
+            <class name="tests.web.GmailTest"/>
         </classes>
     </test>
 

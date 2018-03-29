@@ -45,9 +45,10 @@ public class GmailTest extends BaseTest {
         EmailNewMsgPage emailNewMsgPage = PageManager.createPage(EmailNewMsgPage.class, "New message Page");
         String email = MailUtils.gmailFromUsername(username);
         emailNewMsgPage.sendNewMessage(email,mailText);
+        inboxPage = PageManager.createPage(EmailInboxPage.class, "Inbox Reloaded Page");
         inboxPage.goLastMessage();
 
-        EmailMsgPage emailMsgPage = PageManager.createPage(EmailMsgPage.class, "Gmail Password Page");
+        EmailMsgPage emailMsgPage = PageManager.createPage(EmailMsgPage.class, "MessagePage");
         emailMsgPage.assertMessageBody(username,mailText);
 
 
